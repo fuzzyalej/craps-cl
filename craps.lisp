@@ -22,17 +22,18 @@
 (defun sum-of-throw (result)
   (apply #'+ result))
 
-;; TODO - refactor with let
 (defun instant-win-p (result)
   "If the first throw is a 7 or 11, you win"
-  (or (equalp 7 (sum-of-throw result))
-      (equalp 11 (sum-of-throw result))))
+  (let ((total (sum-of-throw result)))
+    (or (equalp 7 total)
+        (equalp 11 total))))
 
 (defun instant-loss-p (result)
   "If the first throw is a 2, 3 or 12, you lose"
-  (or (equalp 2 (sum-of-throw result))
-      (equalp 3 (sum-of-throw result))
-      (equalp 12 (sum-of-throw result))))
+  (let ((total (sum-of-throw result)))
+    (or (equalp 2 total)
+        (equalp 3 total)
+        (equalp 12 total))))
 
 (defun say-throw (result)
   "Returns the result of the throw or the name of the play"
@@ -46,14 +47,13 @@
         ((instant-loss-p result) '(YOU LOSE))
         (t (append '(YOUR POINT IS) (list (sum-of-throw result))))))
 
-;; TODO - Add nice message
 (defun try-for-point (point)
   "Continue playing once a point has been stablished. 7 loses, the point wins and the rest goes on playing"
   (let* ((result (throw-dice))
          (sum (sum-of-throw result)))
-    (cond ((equalp point sum) 'win)
-          ((equalp point 7) 'lose)
-          (t 'keep-trying))))
+    (cond ((equalp point sum) '(YOU SUPER WIN THE GAME))
+          ((equalp point 7) '(YOU LOSE THE GAME))
+          (t '(YOU HAVE TO KEEP TRYING!)))))
 
 (defun craps ()
   "Starts the game of craps"

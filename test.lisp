@@ -72,7 +72,7 @@
   (test-eq (say-status '(4 4)) '(YOUR POINT IS 8))
 
   ;; try-for-point
-  (test-predicate #'symbolp (try-for-point 4))
+  (test-predicate #'listp (try-for-point 4))
 
   'FINISHED
   )
