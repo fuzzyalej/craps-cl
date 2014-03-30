@@ -41,6 +41,11 @@
   (test-eq (boxcars-p '(1 2)) nil)
   (test-eq (boxcars-p '(6 6)) t)
 
+  ;; sum-of-throw
+  (test-eq (sum-of-throw '(5 6)) 11)
+  (test-eq (sum-of-throw '(1 6)) 7)
+  (test-eq (sum-of-throw '(6 4)) 10)
+
   ;; instant-win-p
   (test-eq (instant-win-p '(6 1)) t)
   (test-eq (instant-win-p '(5 6)) t)

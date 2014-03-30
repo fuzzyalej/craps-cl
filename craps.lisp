@@ -19,36 +19,38 @@
   "'Boxcars' is throwing two sixes"
   (equalp result '(6 6)))
 
+(defun sum-of-throw (result)
+  (apply #'+ result))
+
 ;; TODO - refactor with let
-;; TODO - extract method to sum dices
 (defun instant-win-p (result)
   "If the first throw is a 7 or 11, you win"
-  (or (equalp 7 (apply #'+ result))
-      (equalp 11 (apply #'+ result))))
+  (or (equalp 7 (sum-of-throw result))
+      (equalp 11 (sum-of-throw result))))
 
 (defun instant-loss-p (result)
   "If the first throw is a 2, 3 or 12, you lose"
-  (or (equalp 2 (apply #'+ result))
-      (equalp 3 (apply #'+ result))
-      (equalp 12 (apply #'+ result))))
+  (or (equalp 2 (sum-of-throw result))
+      (equalp 3 (sum-of-throw result))
+      (equalp 12 (sum-of-throw result))))
 
 (defun say-throw (result)
   "Returns the result of the throw or the name of the play"
   (cond ((snake-eyes-p result) 'SNAKE-EYES)
         ((boxcars-p result) 'BOXCARS)
-        (t (apply #'+ result))))
+        (t (sum-of-throw result))))
 
 (defun say-status (result)
   "Returns the status of the throw"
   (cond ((instant-win-p result) '(YOU WIN))
         ((instant-loss-p result) '(YOU LOSE))
-        (t (append '(YOUR POINT IS) (list (apply #'+ result))))))
+        (t (append '(YOUR POINT IS) (list (sum-of-throw result))))))
 
 ;; TODO - Add nice message
 (defun try-for-point (point)
   "Continue playing once a point has been stablished. 7 loses, the point wins and the rest goes on playing"
   (let* ((result (throw-dice))
-         (sum (apply #'+ result)))
+         (sum (sum-of-throw result)))
     (cond ((equalp point sum) 'win)
           ((equalp point 7) 'lose)
           (t 'keep-trying))))
