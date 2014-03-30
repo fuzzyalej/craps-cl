@@ -4,10 +4,12 @@
   "Simulates the throw of a die"
   (+ 1 (random 6)))
 
-; TODO - refactor for N dices
-(defun throw-dice ()
+(defun throw-dice (&optional (dices 2))
   "Simulates the throw of two dice. The result is a list of two results: (1 5)"
-  (list (throw-die) (throw-die)))
+  (append
+    (loop
+      for i from 1 upto dices
+      collect (throw-die))))
 
 (defun snake-eyes-p (result)
   "'Snake eyes' is throwing two ones"
